@@ -72,7 +72,19 @@ func doPushTask() {
 }
 
 func execCommit() error {
+
+	if err := execAdd(); err != nil {
+		return err
+	}
+
 	cmd := exec.Command("git", "commit", "-am", "Auto saved")
+	cmd.Dir = LogseqWordDir
+	_, err := cmd.Output()
+	return err
+}
+
+func execAdd() error {
+	cmd := exec.Command("git", "add", ".")
 	cmd.Dir = LogseqWordDir
 	_, err := cmd.Output()
 	return err
